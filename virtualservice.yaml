@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1beta1
+  kind: VirtualService
+  metadata:
+    name: nginx-vs
+    namespace: dataplane
+  spec:
+    gateways:
+    - nginx-gateway
+    hosts:
+    - '*'
+    http:
+    - route:
+      - destination:
+          host: nginx-service
+          port:
+            number: 30210
+    tcp:
+    - match:
+      - port: 30211
+      route:
+      - destination:
+          host: nginx-service
+          port:
+            number: 30211
