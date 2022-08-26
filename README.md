@@ -35,6 +35,9 @@ spec:
       app: nginx
   template:
     metadata:
+      annotations:
+        sidecar.istio.io/inject: 'true'
+        sidecar.jaegertracing.io/inject: 'true'
       labels:
         app: nginx
     spec:
@@ -43,4 +46,20 @@ spec:
         image: quay.io/rhn_support_rrajaram/nginx:latest
         ports:
         - containerPort: 30210
+~~~
+3. Deploy the associated service
+~~~
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: dataplane
+  name: nginx-service
+  labels:
+    app: nginx
+spec:
+  ports:
+  - port: 30210
+    protocol: TCP
+  selector:
+    app: nginx
 ~~~
