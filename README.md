@@ -17,9 +17,9 @@ openssl x509 -req -sha256 -days 365 -CA example.com.crt -CAkey example.com.key -
 
 1. Create a Kubernetes Secret to hold the certificates that will help in the connection termination
 ~~~
-kubectl create secret tls nginx-server-certs --key nginx.example.com.key --cert nginx.example.com.crt
+oc create secret tls nginx-server-certs --key nginx.example.com.key --cert nginx.example.com.crt -n istio-system
 ~~~
-2. Deploy the nginx application in the appropriate namespace. Two annotations are being added to the deployment
+2. Deploy the nginx application in the appropriate dataplane namespace. Two annotations are being added to the deployment
 ~~~
 apiVersion: apps/v1
 kind: Deployment
