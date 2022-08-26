@@ -46,6 +46,8 @@ spec:
         image: quay.io/rhn_support_rrajaram/nginx:latest
         ports:
         - containerPort: 30210
+          containerPort: 30211
+
 ~~~
 3. Deploy the associated service
 ~~~
@@ -60,6 +62,10 @@ spec:
   ports:
   - port: 30210
     protocol: TCP
+    name: tcp
+  - port: 30211
+    protocol: TCP
+    name: tls
   selector:
     app: nginx
 ~~~
