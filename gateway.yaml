@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+ name: nginx-gateway
+ namespace: dataplane
+spec:
+ selector:
+   istio: ingressgateway
+ servers:
+ - port:
+     number: 30210
+     name: nginx-http-traffic
+     protocol: HTTP
+   hosts:
+   - '*'
+ - port:
+     number: 30211
+     name: nginx-tls-termination
+     protocol: TLS
+   tls:
+     credentialName: nginx-istio-secret
+     mode: SIMPLE
+   hosts:
+   - '*'
