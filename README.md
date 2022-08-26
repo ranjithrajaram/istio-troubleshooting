@@ -69,3 +69,11 @@ spec:
   selector:
     app: nginx
 ~~~
+4. Create gateway in the appropriate dataplane namespace. Gateway definition is available in the repo
+~~~
+oc create -f gateway.yaml -n dataplane
+~~~
+5. Create the virtual service in the appropriate dataplane namespace. virtual Service definition is available in the repo
+~~~
+oc create -f virtualservice.yaml
+~~~
