@@ -20,6 +20,7 @@ openssl x509 -req -sha256 -days 365 -CA example.com.crt -CAkey example.com.key -
 oc create secret tls nginx-server-certs --key nginx.example.com.key --cert nginx.example.com.crt -n istio-system
 ~~~
 2. Deploy the nginx application in the appropriate dataplane namespace. Two annotations are being added to the deployment
+   > oc create -f nginx-deployment.yaml_
 ~~~
 apiVersion: apps/v1
 kind: Deployment
@@ -49,7 +50,7 @@ spec:
           containerPort: 30211
 
 ~~~
-3. Deploy the associated service
+3. Deploy the associated service > oc create -f nginx-service.yaml_
 ~~~
 apiVersion: v1
 kind: Service
@@ -76,4 +77,47 @@ oc create -f gateway.yaml -n dataplane
 5. Create the virtual service in the appropriate dataplane namespace. virtual Service definition is available in the repo
 ~~~
 oc create -f virtualservice.yaml
+~~~
+6. Create the tomcat deployment in the appropriate namespace. It could on the default namespace. tomcat will be outside of the servicemesh.  > oc create -f tomcat-deployment.yaml
+~~~
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat-deployment
+  namespace: default
+  labels:
+    app: tomcat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tomcat
+  template:
+    metadata:
+      labels:
+        app: tomcat
+    spec:
+      containers:
+      - name: tomcat
+        image: quay.io/rhn_support_rrajaram/tomcat:latest
+        ports:
+        - containerPort: 3000
+~~~
+7. Create the associated service for tomcat > oc create -f tomcat-service.yaml
+~~~
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: tomcat-svc
+  labels:
+    app: tomcat
+spec:
+  ports:
+  - port: 3000
+    protocol: TCP
+    name: tcp
+  selector:
+    app: tomcat
+
 ~~~
