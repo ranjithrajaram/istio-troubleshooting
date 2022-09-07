@@ -3,6 +3,7 @@ Troubleshooting Istio with demo
 
 # Sample Application
 
+![nginx-tomcat container application](https://raw.githubusercontent.com/ranjithrajaram/istio-troubleshooting/main/todelete.png)
 
 # Create self signed certificate
 
