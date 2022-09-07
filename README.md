@@ -20,7 +20,7 @@ openssl x509 -req -sha256 -days 365 -CA example.com.crt -CAkey example.com.key -
 oc create secret tls nginx-server-certs --key nginx.example.com.key --cert nginx.example.com.crt -n istio-system
 ~~~
 2. Deploy the nginx application in the appropriate dataplane namespace. Two annotations are being added to the deployment
-   > oc create -f nginx-deployment.yaml_
+   > oc create -f nginx-deployment.yaml
 ~~~
 apiVersion: apps/v1
 kind: Deployment
@@ -50,7 +50,8 @@ spec:
           containerPort: 30211
 
 ~~~
-3. Deploy the associated service > oc create -f nginx-service.yaml_
+3. Deploy the associated service 
+   > oc create -f nginx-service.yaml
 ~~~
 apiVersion: v1
 kind: Service
@@ -78,7 +79,8 @@ oc create -f gateway.yaml -n dataplane
 ~~~
 oc create -f virtualservice.yaml
 ~~~
-6. Create the tomcat deployment in the appropriate namespace. It could on the default namespace. tomcat will be outside of the servicemesh.  > oc create -f tomcat-deployment.yaml
+6. Create the tomcat deployment in the appropriate namespace. It could on the default namespace. tomcat will be outside of the servicemesh.  
+   > oc create -f tomcat-deployment.yaml
 ~~~
 apiVersion: apps/v1
 kind: Deployment
@@ -103,7 +105,8 @@ spec:
         ports:
         - containerPort: 3000
 ~~~
-7. Create the associated service for tomcat > oc create -f tomcat-service.yaml
+7. Create the associated service for tomcat 
+   > oc create -f tomcat-service.yaml
 ~~~
 apiVersion: v1
 kind: Service
